@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff5ee">
+
+    <LinearLayout
+        android:id="@+id/contentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:textStyle="bold"
+            android:layout_marginTop="70dp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="30sp"
+            android:text="Trắc nghiệm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Spinner
+            android:id="@+id/spinner_category"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/textview_high_score"
+            android:textColor="#ff3d00"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:layout_marginTop="50dp"
+            android:text="Điểm cao : 100"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/button_start_question"
+            android:textColor="@color/black"
+            android:backgroundTint="#66cdaa"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
+            android:text="Bắt đầu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_download_data"
+        android:layout_width="137dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="261dp"
+        android:layout_marginBottom="182dp"
+        android:backgroundTint="#FFC0CB"
+        android:text="Download"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/button_user_profile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="16dp"
+        android:text="User Profile" />
+
+    <Button
+        android:id="@+id/main_sign_out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="257dp"
+        android:layout_marginBottom="16dp"
+        android:textColor="@color/white"
+        android:backgroundTint="#3F51B5"
+        android:text="Sign Out" />
+
+    <Button
+        android:id="@+id/button_view_tests"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="140dp"
+        android:layout_marginBottom="102dp"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/black"
+        android:text="View Tests" />
+</RelativeLayout>
