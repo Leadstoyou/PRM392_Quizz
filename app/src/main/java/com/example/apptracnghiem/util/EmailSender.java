@@ -30,19 +30,19 @@ public class EmailSender {
 
         Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("lytieulong2j2@gmail.com", "ngmm pgqt gknn ldbk");
+                return new PasswordAuthentication("vietdvhe161072@fpt.edu.vn", "dbau kwso xvcr ghio");
             }
         });
 
         new Thread(() -> {
             try {
                 MimeMessage message = new MimeMessage(session);
-                message.setFrom(new InternetAddress("lytieulong2j2@gmail.com"));
+                message.setFrom(new InternetAddress("vietdvhe161072@fpt.edu.vn"));
                 message.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
                 message.setSubject("Password Reset Request");
                 String htmlContent = "<div style=\"font-family: Arial, sans-serif; line-height: 1.6;\">" +
                         "<h1 style=\"color: #333;\">Welcome to Our Service!</h1>" +
-                        "<p style=\"font-size: 18px;\">We are thrilled to have you join our community. As a new member, " + username + " you now have access to exclusive features and benefits designed to enhance your experience.</p>" +
+                        "<p style=\"font-size: 18px;\">We are thrilled to have you join our community. As a new member, <strong>" + username + "</strong> you now have access to exclusive features and benefits designed to enhance your experience.</p>" +
                         "<p style=\"font-size: 16px;\">If you have any questions or need assistance, our support team is here to help you. Don't hesitate to reach out.</p>" +
                         "<p style=\"font-size: 16px;\">Best regards,<br>The Team</p>" +
                         "</div>";
