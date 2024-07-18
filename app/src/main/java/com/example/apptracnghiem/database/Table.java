@@ -32,6 +32,7 @@ public class Table {
         public static final String COLUMN_USERNAME = "username";
         public static final String COLUMN_PASSWORD = "password";
         public static final String COLUMN_EMAIL = "email";
+        public static final String COLUMN_AVATAR = "avatar";
     }
 
     public static class ScoresTable implements BaseColumns {
@@ -40,5 +41,6 @@ public class Table {
         public static final String COLUMN_CATEGORY_ID = "category_id";
         public static final String COLUMN_SCORE = "score";
         public static final String COLUMN_TIMESTAMP = "timestamp";
+
     }
 }

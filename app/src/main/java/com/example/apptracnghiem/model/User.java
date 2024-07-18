@@ -5,6 +5,8 @@ public class User {
     private String username;
     private String email;
     private String password;
+    private String avatar;
+
 
     public User() {
     }
@@ -14,6 +16,22 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    public User(int _id, String username, String email, String password, String avatar) {
+        this._id = _id;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.avatar = avatar;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public int get_id() {
@@ -55,6 +73,7 @@ public class User {
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", avatar='" + avatar + '\'' +
                 '}';
     }
 }

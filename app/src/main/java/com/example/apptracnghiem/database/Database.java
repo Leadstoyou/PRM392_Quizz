@@ -62,7 +62,8 @@ public class Database extends SQLiteOpenHelper {
                 Table.UserTable._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 Table.UserTable.COLUMN_USERNAME + " TEXT UNIQUE, " +
                 Table.UserTable.COLUMN_EMAIL + " TEXT UNIQUE, " +
-                Table.UserTable.COLUMN_PASSWORD + " TEXT" +
+                Table.UserTable.COLUMN_PASSWORD + " TEXT," +
+                Table.UserTable.COLUMN_AVATAR + " TEXT" +
                 ")";
         final String SQL_CREATE_SCORES_TABLE = "CREATE TABLE " +
                 Table.ScoresTable.TABLE_NAME + " (" +
@@ -340,7 +341,8 @@ public class Database extends SQLiteOpenHelper {
                 Table.UserTable._ID,
                 Table.UserTable.COLUMN_EMAIL,
                 Table.UserTable.COLUMN_USERNAME,
-                Table.UserTable.COLUMN_PASSWORD
+                Table.UserTable.COLUMN_PASSWORD,
+                Table.UserTable.COLUMN_AVATAR
         };
         String selection = Table.UserTable.COLUMN_EMAIL + "=?";
         String[] selectionArgs = {email};
@@ -351,19 +353,21 @@ public class Database extends SQLiteOpenHelper {
             int id = cursor.getInt(cursor.getColumnIndexOrThrow(Table.UserTable._ID));
             String username = cursor.getString(cursor.getColumnIndexOrThrow(Table.UserTable.COLUMN_USERNAME));
             String password = cursor.getString(cursor.getColumnIndexOrThrow(Table.UserTable.COLUMN_PASSWORD));
+            String avatar = cursor.getString(cursor.getColumnIndexOrThrow(Table.UserTable.COLUMN_AVATAR));
 
-            user = new User(id, username, email, password);
+            user = new User(id, username, email, password,avatar);
             cursor.close();
         }
         return user;
     }
     public boolean updateUser(User user) {
+        Log.d("user",String.valueOf(user));
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(Table.UserTable.COLUMN_USERNAME, user.getUsername());
         values.put(Table.UserTable.COLUMN_EMAIL, user.getEmail());
         values.put(Table.UserTable.COLUMN_PASSWORD, user.getPassword());
-
+        values.put(Table.UserTable.COLUMN_AVATAR, user.getAvatar());
         String selection = Table.UserTable._ID + "=?";
         String[] selectionArgs = {String.valueOf(user.get_id())};
 

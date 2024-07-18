@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
+import com.example.apptracnghiem.Fragment.InfoDialogFragment;
 import com.example.apptracnghiem.R;
 import com.example.apptracnghiem.activity.MainActivity;
 import com.example.apptracnghiem.database.Database;
@@ -20,6 +23,7 @@ public class SigninActivity extends AppCompatActivity {
     private Button buttonLogin;
     private TextView textViewSignUp;
     private Database dbHelper;
+    private ImageView infoImg;
     private SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +36,7 @@ public class SigninActivity extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editTextPassword);
         buttonLogin = findViewById(R.id.buttonLogin);
         textViewSignUp = findViewById(R.id.textViewSignUp);
-
+        infoImg = findViewById(R.id.login_img_info);
         checkSession();
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +67,11 @@ public class SigninActivity extends AppCompatActivity {
             public void onClick(View v) {
                 startActivity(new Intent(SigninActivity.this, SignupActivity.class));
             }
+        });
+        infoImg.setOnClickListener(v-> {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            InfoDialogFragment modalDialogFragment = new InfoDialogFragment();
+            modalDialogFragment.show(fragmentManager, "modal_download_dialog");
         });
     }
 

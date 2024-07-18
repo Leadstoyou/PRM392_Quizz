@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -29,6 +31,9 @@ public class Common {
 
     public void exportToExcel( Context context) {
          String fileName = "Question_data";
+        new Handler(Looper.getMainLooper()).post(() ->
+                Toast.makeText(context, "Doing export  ", Toast.LENGTH_SHORT).show()
+        );
         Cursor cursor = new Database(context).getAllQuestionData();
         if (cursor != null && cursor.getCount() > 0) {
             XSSFWorkbook workbook = new XSSFWorkbook();
@@ -71,11 +76,15 @@ public class Common {
             File filePath = new File(directory, fileName + ".xlsx");
             try (FileOutputStream outputStream = new FileOutputStream(filePath)) {
                 workbook.write(outputStream);
-                Toast.makeText(context, "Exported to " + filePath, Toast.LENGTH_SHORT).show();
+                new Handler(Looper.getMainLooper()).post(() ->
+                        Toast.makeText(context, "Exported to " + filePath, Toast.LENGTH_SHORT).show()
+                );
             } catch (IOException e) {
                 e.printStackTrace();
             }
             cursor.close();
         }
     }
+
+
 }

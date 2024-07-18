@@ -4,10 +4,16 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,14 +36,17 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+
     private static final int REQUEST_CODE_QUESTION = 1;
     private TextView textViewHighScore;
+
     private Spinner spinnerCategory;
     private Button buttonStareQuestion;
-    private Button buttonUserProfile, buttonSignOut, buttonViewTest, buttonDownload;
+    private Button buttonUserProfile, buttonSignOut, buttonViewTest, buttonDownload ;
     private SharedPreferences sharedPreferences;
     private int highscore;
     private int PERMISSION_WRITE_FILE = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,23 +81,39 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, ViewTestActivity.class));
         });
         buttonDownload.setOnClickListener(v -> {
+            verifyStoragePermissions();
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_WRITE_FILE);
             } else {
-                new Common().exportToExcel(this);
+                downloadExcel();
             }
         });
+
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        loadHighScore();
+    }
+
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERMISSION_WRITE_FILE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                new Common().exportToExcel(this);
+                downloadExcel();
             } else {
                 Toast.makeText(this, "grant permission fault", Toast.LENGTH_LONG).show();
             }
         }
     }
+
+    private void downloadExcel() {
+        new Thread(() -> {
+            new Common().exportToExcel(this);
+        }).start();
+    }
+
     private void openUserProfile() {
         // Tạo Intent để mở UserProfileActivity
         Intent intent = new Intent(MainActivity.this, UserProfileActivity.class);
@@ -122,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
         buttonSignOut = findViewById(R.id.main_sign_out);
         buttonViewTest = findViewById(R.id.button_view_tests);
         buttonDownload = findViewById(R.id.button_download_data);
+
     }
 
     private void loadCategories() {
@@ -134,6 +160,23 @@ public class MainActivity extends AppCompatActivity {
         categoryArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spinnerCategory.setAdapter(categoryArrayAdapter);
+    }
+
+    public void verifyStoragePermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (!Environment.isExternalStorageManager()) {
+                try {
+                    Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                    intent.addCategory("android.intent.category.DEFAULT");
+                    intent.setData(Uri.parse(String.format("package:%s", getPackageName())));
+                    startActivityForResult(intent, 100);
+                } catch (Exception e) {
+                    Intent intent = new Intent();
+                    intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                    startActivityForResult(intent, 100);
+                }
+            }
+        }
     }
 
 }
